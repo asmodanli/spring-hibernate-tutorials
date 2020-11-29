@@ -24,10 +24,14 @@ public class MainDemoApp {
 		theMembershipDao.addAccount();
 		
 		// call the business method
-		theAccountDAO.addAccount();
+		Account myAccount = new Account();
+		
+		theAccountDAO.addAccount(myAccount, true);
+		theAccountDAO.doWork();
 		
 		theMembershipDao.addSomething();
-
+		theMembershipDao.goToSleep();
+		
 		// close the context
 		context.close();
 	}
