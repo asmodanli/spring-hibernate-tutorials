@@ -46,8 +46,8 @@ public class MyDemoLoggingAspect {
 			// log the exception
 			myLogger.warning(e.getMessage());
 			
-			// give user a custom message
-			result = "accident!! but i'll get it";
+			// rethrow exception
+			throw e;
 			
 		}
 				
