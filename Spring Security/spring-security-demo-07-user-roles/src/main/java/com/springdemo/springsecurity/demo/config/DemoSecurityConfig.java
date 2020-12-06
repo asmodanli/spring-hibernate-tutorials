@@ -22,7 +22,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.inMemoryAuthentication()
 			.withUser(users.username("sena").password("9999").roles("EMPLOYEE"))
 			.withUser(users.username("ayse").password("9999").roles("MANAGER","EMPLOYEE"))
-			.withUser(users.username("tomris").password("9999").roles("ADMIN"));
+			.withUser(users.username("tomris").password("9999").roles("ADMIN","EMPLOYEE"));
 		
 	}
 
@@ -30,12 +30,17 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception { // configure security login, logout
 
 		http.authorizeRequests()			// restrict access based on the httpServletRequest	
-			.anyRequest().authenticated()   // any request to the app must be authenticated
+	//		.anyRequest().authenticated()   // any request to the app must be authenticated
+			.antMatchers("/").hasRole("EMPLOYEE")
+			.antMatchers("/leaders/**").hasRole("MANAGER")
+			.antMatchers("/systems/**").hasRole("ADMIN")
 			.and()							
 			.formLogin().loginPage("/showMyLoginPage")  // customize login - request mapping
 			.loginProcessingUrl("/authenticateTheUser") // login form post data to this url for processing
 			.permitAll() 								// everyone can see it
-			.and().logout().permitAll();
+			.and().logout().permitAll()
+			.and()
+			.exceptionHandling().accessDeniedPage("/access-denied"); // request mapping page
 	}
 
 }

@@ -16,10 +16,26 @@
 	<p>
 		User:
 		<security:authentication property="principal.username" />
-		<br>
-		<br> Role:
+		<br> <br> Role:
 		<security:authentication property="principal.authorities" />
 	</p>
+
+	<hr>
+
+	<security:authorize access="hasRole('MANAGER')">
+
+		<p>
+			<a href="${pageContext.request.contextPath}/leaders">Leadership
+				meeting</a> (Only for manager peeps)
+		</p>
+	</security:authorize>
+	<security:authorize access="hasRole('ADMIN')">
+
+		<hr>
+		<a href="${pageContext.request.contextPath}/systems">Leadership
+			meeting</a> (Only for admin peeps)
+	<hr>
+	</security:authorize>
 
 	<form:form action="${pageContext.request.contextPath}/logout"
 		method="POST">
